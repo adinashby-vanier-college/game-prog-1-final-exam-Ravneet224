@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class name="Canon" extends="Actor" enable="true" strideversion="1">
+<class name="Canon" extends="Actor" extends-java="Actor" enable="true" strideversion="1">
     <javadoc xml:space="preserve"/>
     <imports>
         <import target="java.util.*" enable="true"/>
@@ -9,11 +9,34 @@
     <fields/>
     <constructors/>
     <methods>
-        <method access="public" type="void" name="act" enable="true">
+        <method access="public" type="void" type-java="void" name="act" enable="true">
             <javadoc xml:space="preserve">Act - do whatever the Canon wants to do. This method is called whenever the 'Act' or 'Run' button gets pressed in the environment.</javadoc>
             <params/>
             <throws/>
             <body/>
+        </method>
+        <method access="private" type="void" type-java="void" name="FireProjectile" enable="true">
+            <javadoc xml:space="preserve">Tried to make it shoot</javadoc>
+            <params/>
+            <throws/>
+            <body>
+                <variable type="MouseInfo" type-java="MouseInfo" name="mouse" value="Greenfoot.getMouseInfo()" value-java="Greenfoot.getMouseInfo()" enable="true"/>
+                <if condition="mouse!=null" condition-java="mouse != null" enable="true">
+                    <ifStatements>
+                        <variable type="int" type-java="int" name="mouseX" value="mouse.getX()" value-java="mouse.getX()" enable="true"/>
+                        <variable type="int" type-java="int" name="mouseY" value="mouse.getY()" value-java="mouse.getY()" enable="true"/>
+                        <variable type="int" type-java="int" name="canonX" value="getX()" value-java="getX()" enable="true"/>
+                        <variable type="int" type-java="int" name="canonY" value="getY()" value-java="getY()" enable="true"/>
+                        <variable type="int" type-java="int" name="mainAngle" value="(int)Math.toDegrees(Math.atan2(mouseY-canonY,mouseX-canonX))" value-java="(int)Math.toDegrees(Math.atan2(mouseY - canonY, mouseX - canonX))" enable="true"/>
+                        <variable type="World" type-java="World" name="world" value="getWorld()" value-java="getWorld()" enable="true"/>
+                        <variable type="int" type-java="int" name="i" value="-1" value-java="-1" enable="true"/>
+                        <while condition="i&lt;=1" condition-java="i &lt;= 1" enable="true">
+                            <variable type="CannonBall" type-java="CannonBall" name="cannonBall" value="new CannonBall()" value-java=" new CannonBall()" enable="true"/>
+                            <call expression="world.addObject(cannonBall,canonX,canonY)" expression-java="world.addObject(cannonBall, canonX, canonY)" enable="true"/>
+                        </while>
+                    </ifStatements>
+                </if>
+            </body>
         </method>
     </methods>
 </class>
