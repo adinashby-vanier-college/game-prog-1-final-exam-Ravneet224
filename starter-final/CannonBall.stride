@@ -1,19 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class name="CannonBall" extends="Actor" enable="true" strideversion="1">
+<class name="CannonBall" extends="Actor" extends-java="Actor" enable="true" strideversion="1">
     <javadoc xml:space="preserve"/>
     <imports>
         <import target="java.util.*" enable="true"/>
         <import target="greenfoot.*" enable="true"/>
     </imports>
     <implements/>
-    <fields/>
+    <fields>
+        <variable access="private" type="int" type-java="int" name="speed" value="5" value-java="5" enable="true"/>
+        <variable access="private" type="int" type-java="int" name="distanceTraveled" value="0" value-java="0" enable="true"/>
+        <comment xml:space="preserve">Tracks the distance traveled</comment>
+        <variable access="private" type="int" type-java="int" name="maxDistance" value="300" value-java="300" enable="true"/>
+    </fields>
     <constructors/>
     <methods>
-        <method access="public" type="void" name="act" enable="true">
+        <method access="public" type="void" type-java="void" name="act" enable="true">
             <javadoc xml:space="preserve">Act - do whatever the CannonBall wants to do. This method is called whenever the 'Act' or 'Run' button gets pressed in the environment.</javadoc>
             <params/>
             <throws/>
-            <body/>
+            <body>
+                <call expression="eat()" expression-java="eat()" enable="true"/>
+                <call expression="move(speed)" expression-java="move(speed)" enable="true"/>
+                <if condition="isGameOver()" condition-java="isGameOver()" enable="true">
+                    <ifStatements>
+                        <call expression="transitionToGameOverWorld()" expression-java="transitionToGameOverWorld()" enable="true"/>
+                    </ifStatements>
+                </if>
+            </body>
+        </method>
+        <method access="public" type="boolean" type-java="boolean" name="isGameOver" enable="true">
+            <javadoc xml:space="preserve">Chacks if the condition for Game Lost is met</javadoc>
+            <params/>
+            <throws/>
+            <body>
+                <variable type="World" type-java="World" name="world" value="getWorld()" value-java="getWorld()" enable="true"/>
+                <if condition="world.getObjects(Ladybug.class).isEmpty()" condition-java="world.getObjects(Ladybug.class).isEmpty()" enable="true">
+                    <ifStatements>
+                        <return value="true" value-java="true" enable="true"/>
+                    </ifStatements>
+                    <else>
+                        <return value="false" value-java="false" enable="true"/>
+                    </else>
+                </if>
+            </body>
+        </method>
+        <method access="public" type="void" type-java="void" name="transitionToGameOverWorld" enable="true">
+            <javadoc xml:space="preserve">Transitions over to the GameOverWorld world</javadoc>
+            <params/>
+            <throws/>
+            <body>
+                <variable type="World" type-java="World" name="Loser" value="new GameLostWorld()" value-java=" new GameLostWorld()" enable="true"/>
+                <call expression="Greenfoot.setWorld(Loser)" expression-java="Greenfoot.setWorld(Loser)" enable="true"/>
+                <call expression="Greenfoot.playSound(&quot;lose.wav&quot;)" expression-java="Greenfoot.playSound(&quot;lose.wav&quot;)" enable="true"/>
+            </body>
+        </method>
+        <method access="public" type="void" type-java="void" name="eat" enable="true">
+            <javadoc xml:space="preserve">Helps cannonball do some sort of a collision with the Ladybug</javadoc>
+            <params/>
+            <throws/>
+            <body>
+                <variable type="Actor" type-java="Actor" name="ladybug" value="getOneIntersectingObject(Ladybug.class)" value-java="getOneIntersectingObject(Ladybug.class)" enable="true"/>
+                <if condition="ladybug!=null" condition-java="ladybug != null" enable="true">
+                    <ifStatements>
+                        <variable type="World" type-java="World" name="world" value="getWorld()" value-java="getWorld()" enable="true"/>
+                        <call expression="world.removeObject(ladybug)" expression-java="world.removeObject(ladybug)" enable="true"/>
+                    </ifStatements>
+                </if>
+            </body>
         </method>
     </methods>
 </class>

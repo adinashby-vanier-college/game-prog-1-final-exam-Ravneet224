@@ -15,4 +15,25 @@ public class Canon extends Actor
     public void act()
     {
     }
+
+    /**
+     * Tried to make it shoot
+     */
+    private void FireProjectile()
+    {
+        MouseInfo mouse = Greenfoot.getMouseInfo();
+        if (mouse != null) {
+            int mouseX = mouse.getX();
+            int mouseY = mouse.getY();
+            int canonX = getX();
+            int canonY = getY();
+            int mainAngle = (int)Math.toDegrees(Math.atan2(mouseY - canonY, mouseX - canonX));
+            World world = getWorld();
+            int i = -1;
+            while (i <= 1) {
+                CannonBall cannonBall =  new  CannonBall();
+                world.addObject(cannonBall, canonX, canonY);
+            }
+        }
+    }
 }
